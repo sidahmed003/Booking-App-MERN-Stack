@@ -44,6 +44,6 @@ const HotelSchema = new mongoose.Schema({
         type: Boolean,
         default: false
     }
-})
+});
 
 export default mongoose.model("Hotel", HotelSchema);
