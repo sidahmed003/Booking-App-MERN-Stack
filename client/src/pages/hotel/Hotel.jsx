@@ -25,7 +25,19 @@ const Hotel = () => {
 
   const { dates } = useContext(SearchContext);
 
-  console.log(dates)  
+  console.log("Contenu de dates :", dates);
+
+  const MILLISECONDS_PER_DAY = 1000 * 60 * 60 * 24;
+  function dayDifference(date1, date2) {
+    const timeDiff = Math.abs(date2.getTime() - date1.getTime());
+    return Math.ceil(timeDiff / MILLISECONDS_PER_DAY);
+  }
+  
+  if (dates?.length > 0 && dates[0]?.startDate && dates[0]?.endDate) {
+    console.log(dayDifference(new Date(dates[0].endDate), new Date(dates[0].startDate)));
+  } else {
+    console.log("Les dates sont absentes ou incorrectes");
+  }
 
   const handleOpen = (i) => {
     setSlideNumber(i);
