@@ -23,7 +23,7 @@ const Hotel = () => {
 
   const { data, loading, error } = useFetch(`http://localhost:5000/api/hotels/find/${id}`);
 
-  const { dates } = useContext(SearchContext);
+  const { dates, options } = useContext(SearchContext);
 
   console.log("Contenu de dates :", dates);
 
@@ -33,11 +33,7 @@ const Hotel = () => {
     return Math.ceil(timeDiff / MILLISECONDS_PER_DAY);
   }
   
-  if (dates?.length > 0 && dates[0]?.startDate && dates[0]?.endDate) {
-    console.log(dayDifference(new Date(dates[0].endDate), new Date(dates[0].startDate)));
-  } else {
-    console.log("Les dates sont absentes ou incorrectes");
-  }
+  const days = dayDifference(dates[0].endDate, dates[0].startDate)
 
   const handleOpen = (i) => {
     setSlideNumber(i);
@@ -119,13 +115,13 @@ const Hotel = () => {
               </p>
             </div>
             <div className="hotelDetailsPrice">
-              <h1>Perfect for a 9-night stay!</h1>
+              <h1>Perfect for a {days}-night stay!</h1>
               <span>
                 Located in the real heart of Krakow, this property has an
                 excellent location score of 9.8!
               </span>
               <h2>
-                <b>$945</b> (9 nights)
+                <b>${ days * data.cheapestPrice * options.room }</b> ({days} nights)
               </h2>
               <button>Reserve or Book Now!</button>
             </div>
